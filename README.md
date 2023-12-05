@@ -34,7 +34,7 @@ To deploy this project go to the directory and run
 
 This project is used this design for reference:
 
-- [![design]()](https://www.figma.com/file/nZZkBnWyWPGOZtzr6K5N4F/Wallet-App-UI-Kit-(Community)?type=design&node-id=119-884&mode=design&t=pczfwCrWVdNv8tpC-0)
+- https://www.figma.com/file/nZZkBnWyWPGOZtzr6K5N4F/Wallet-App-UI-Kit-(Community)?type=design&node-id=119-884&mode=design&t=pczfwCrWVdNv8tpC-0
 
 
 ## Screenshots
