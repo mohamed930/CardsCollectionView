@@ -26,6 +26,10 @@ class MyCardsViewController: UIViewController {
         fetchData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
+    }
+    
     func configureUI() {
         navigationController?.isNavigationBarHidden = true
         confirmButton.SetButtonEnabledOrDisabled(status: false)
@@ -47,6 +51,12 @@ class MyCardsViewController: UIViewController {
         }))
         
         present(alert, animated: true)
+    }
+    
+    @IBAction func addNewCardButtonAction (_ sender: Any) {
+        let addNewCard = AddCardViewController(nibName: "AddCardViewController", bundle: nil)
+        addNewCard.delegate = self
+        navigationController?.pushViewController(addNewCard, animated: true)
     }
     
     func fetchData() {
@@ -127,4 +137,20 @@ extension MyCardsViewController: myCardsProtocol {
         selectedCard = card
     }
     
+}
+
+
+extension MyCardsViewController: AddCardProtocol {
+    func cardAddedSuccess(newCard: CardModel) {
+        guard var lastCard = virtualCardList.last else { return }
+        lastCard.last = false
+        var newVirtualCardList: [CardModel] = virtualCardList.dropLast()
+        newVirtualCardList.append(lastCard)
+        newVirtualCardList.append(newCard)
+        
+        virtualCardList = newVirtualCardList
+        presenter.cards = virtualCardList
+        
+        collectionView.reloadData()
+    }
 }

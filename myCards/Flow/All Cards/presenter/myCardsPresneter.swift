@@ -14,7 +14,7 @@ protocol myCardsProtocol: NSObject {
 
 class myCardsPresneter {
     weak var viewDelegate: myCardsProtocol?
-    private var cards = Array<CardModel>()
+    var cards = Array<CardModel>()
     
     init(viewDelegate: myCardsProtocol) {
         self.viewDelegate = viewDelegate

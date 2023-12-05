@@ -75,18 +75,30 @@
                         <action selector="confirmButtonAction:" destination="-1" eventType="touchUpInside" id="Ux5-Mu-5qC"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rCu-jH-cwH">
+                    <rect key="frame" x="272.5" y="60" width="125.5" height="35"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" image="plus.app" catalog="system" title="Add card" imagePadding="8">
+                        <color key="baseForegroundColor" name="#0032EE"/>
+                    </buttonConfiguration>
+                    <connections>
+                        <action selector="addNewCardButtonAction:" destination="-1" eventType="touchUpInside" id="wQW-FF-Jsa"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="qen-4B-GeD" secondAttribute="trailing" constant="16" id="1OL-FB-jNY"/>
                 <constraint firstItem="qen-4B-GeD" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="D3b-FY-L1q"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="P0n-Jh-GkS" secondAttribute="trailing" id="U1l-8l-uJz"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="z6D-5c-l4r" secondAttribute="bottom" constant="20" id="XnU-kM-ys0"/>
                 <constraint firstItem="P0n-Jh-GkS" firstAttribute="top" secondItem="bU1-BY-DXV" secondAttribute="bottom" constant="16" id="cKf-PX-BGP"/>
+                <constraint firstItem="rCu-jH-cwH" firstAttribute="centerY" secondItem="qen-4B-GeD" secondAttribute="centerY" id="erK-G8-tD3"/>
                 <constraint firstItem="mKe-fO-PLQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="fv2-YO-sSz"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="z6D-5c-l4r" secondAttribute="trailing" constant="16" id="hfc-GK-OL7"/>
                 <constraint firstItem="z6D-5c-l4r" firstAttribute="top" secondItem="P0n-Jh-GkS" secondAttribute="bottom" constant="20" id="iLe-ho-XDI"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="rCu-jH-cwH" secondAttribute="trailing" constant="16" id="iPu-aa-eA4"/>
+                <constraint firstItem="rCu-jH-cwH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qen-4B-GeD" secondAttribute="trailing" constant="16" id="kSY-lQ-CC3"/>
                 <constraint firstItem="P0n-Jh-GkS" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="lhq-wW-ha1"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="bU1-BY-DXV" secondAttribute="trailing" id="mfW-e8-3HI"/>
                 <constraint firstItem="mKe-fO-PLQ" firstAttribute="top" secondItem="qen-4B-GeD" secondAttribute="bottom" constant="12" id="nyu-83-Fd4"/>
@@ -100,6 +112,7 @@
         </view>
     </objects>
     <resources>
+        <image name="plus.app" catalog="system" width="128" height="114"/>
         <namedColor name="#0032EE">
             <color red="0.0" green="0.19599999487400055" blue="0.93300002813339233" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
