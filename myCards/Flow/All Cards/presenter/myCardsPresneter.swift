@@ -55,4 +55,18 @@ class myCardsPresneter {
             viewDelegate?.makeButtonEnabled(card: nil)
         }
     }
+    
+    
+    func addNewCardOperation(newCard: CardModel) {
+        guard var lastCard = cards.last else { return }
+        lastCard.last = false
+        var newVirtualCardList: [CardModel] = cards.dropLast()
+        newVirtualCardList.append(lastCard)
+        newVirtualCardList.append(newCard)
+        
+        // MARK: - Becareful don't forget to update array in presenter also.
+        cards = newVirtualCardList
+        
+        viewDelegate?.fetchCardsSuccessfully(cards: newVirtualCardList)
+    }
 }

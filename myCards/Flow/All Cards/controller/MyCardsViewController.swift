@@ -90,23 +90,28 @@ extension MyCardsViewController: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        let selectedIndex = Singleton.shared.index
+        var selectedFlag: Bool!
+        
         /// Be attention i worte this line to make the card return to normal place.
-        if indexPath.row == virtualCardList.count - 1 {
-            // Last Element.
-            MyCardsViewController.selectedCardFlag = !MyCardsViewController.selectedCardFlag
-            presenter.cardSelectedOperation(index: indexPath.row,selected: !MyCardsViewController.selectedCardFlag)
-        }
-        else {
-            if Singleton.shared.index == indexPath.row {
-                Singleton.shared.index = virtualCardList.count - 1
-                presenter.cardSelectedOperation(index: indexPath.row,selected: false)
-            }
-            else {
-                Singleton.shared.index = indexPath.row
-                presenter.cardSelectedOperation(index: indexPath.row,selected: true)
-            }
+        switch indexPath.row {
+            case virtualCardList.count - 1:
+                MyCardsViewController.selectedCardFlag = !MyCardsViewController.selectedCardFlag
+                presenter.cardSelectedOperation(index: indexPath.row,selected: !MyCardsViewController.selectedCardFlag)
+                break
+            default:
+                if selectedIndex == indexPath.row {
+                    Singleton.shared.index = virtualCardList.count - 1
+                    selectedFlag = false
+                }
+                else {
+                    Singleton.shared.index = indexPath.row
+                    selectedFlag = true
+                }
             
-            collectionView.performBatchUpdates({})
+                presenter.cardSelectedOperation(index: indexPath.row, selected: selectedFlag)
+                collectionView.performBatchUpdates({})
+                break
         }
     }
     
@@ -125,6 +130,7 @@ extension MyCardsViewController: myCardsProtocol {
     func fetchCardsSuccessfully(cards: [CardModel]) {
         virtualCardList = cards
         collectionView.reloadData()
+        returnAllCardToInitView()
     }
     
     func makeButtonEnabled(card: CardModel?) {
@@ -141,16 +147,8 @@ extension MyCardsViewController: myCardsProtocol {
 
 
 extension MyCardsViewController: AddCardProtocol {
+    
     func cardAddedSuccess(newCard: CardModel) {
-        guard var lastCard = virtualCardList.last else { return }
-        lastCard.last = false
-        var newVirtualCardList: [CardModel] = virtualCardList.dropLast()
-        newVirtualCardList.append(lastCard)
-        newVirtualCardList.append(newCard)
-        
-        virtualCardList = newVirtualCardList
-        presenter.cards = virtualCardList
-        
-        collectionView.reloadData()
+        presenter.addNewCardOperation(newCard: newCard)
     }
 }

@@ -16,6 +16,7 @@ class AddCardViewController: UIViewController {
     @IBOutlet weak var cardNumberTextField: UITextField!
     
     weak var delegate: AddCardProtocol?
+    lazy var presenter = AddCardPresenter(viewdelegate: self)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,19 +31,7 @@ class AddCardViewController: UIViewController {
     }
     
     @IBAction func saveButtonAction (_ sender: Any) {
-        if (cardTitleTextField.text!.isEmpty) {
-            showAlert(title: "Attention", describtion: "Please, fill the card title")
-        }
-        else {
-            if (cardTitleTextField.text!.isEmpty) || cardNumberTextField.text?.count != 14 {
-                showAlert(title: "Attention", describtion: "Please, fill the card number")
-            }
-            else {
-                let card = CardModel(cardTitle: cardTitleLabel.text!, cardNumber: cardNumberLabel.text!, cardBalance: 0, backgroundColor: "#270685",last: true)
-                delegate?.cardAddedSuccess(newCard: card)
-                navigationController?.popViewController(animated: true)
-            }
-        }
+        presenter.validationData(cardTitle: cardTitleLabel.text!, cardNumber: cardNumberTextField.text!)
     }
 }
 
@@ -65,32 +54,35 @@ extension AddCardViewController: UITextFieldDelegate {
         }
         else {
             guard let currentText = textField.text else { return true }
-                    
-            // Calculate the length of the final string after editing
-            let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
-            let newTextLength = newText.count
             
-            // If the total length exceeds 14, prevent further editing
-            if newTextLength > 14 {
-                return false
-            }
-            
-            // If the total length is exactly 14, process the string
-            if newTextLength == 14 {
-                let lastNine = String(newText.suffix(5)) // Extract the last 5 digits
-                
-                let firstFiveHidden = "****" // Hide the first 5 digits
-                
-                let formattedText = "\(firstFiveHidden) \(lastNine)" // Combine the formatted text
-                
-                cardNumberLabel.text = formattedText // Update the resultLabel
-                
-                textField.text = newText // Update the text field
-                
-                return false // Prevent further editing
-            }
+            return presenter.validationCardNumber(text: currentText, range: range, string: string)
         }
         
         return true
+    }
+}
+
+extension AddCardViewController: AddCardProtocol {
+    func validation(validation: validationType) {
+        switch validation {
+        case .accpeted:
+            let card = CardModel(cardTitle: cardTitleLabel.text!,
+                                 cardNumber: cardNumberLabel.text!,
+                                 cardBalance: 0,
+                                 backgroundColor: "#270685",
+                                 last: true
+                                )
+            delegate?.cardAddedSuccess(newCard: card)
+            navigationController?.popViewController(animated: true)
+        case .cardNumber:
+            showAlert(title: "Attention", describtion: "Please, fill the card number")
+        case .cardTitle:
+            showAlert(title: "Attention", describtion: "Please, fill the card title")
+        }
+    }
+    
+    func cardNumberView(cardNumberForLabel: String,cardNumberForTextField: String) {
+        cardNumberLabel.text = cardNumberForLabel
+        cardNumberTextField.text = cardNumberForTextField
     }
 }
